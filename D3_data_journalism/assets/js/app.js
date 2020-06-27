@@ -17,7 +17,7 @@ var svg = d3
 var chartGroup = svg.append("g")
     .attr("transform",`translate(${margin.left},${margin.top})`);
 
-// ==========Import and format the data to numerical values =======================    
+// ========== Retrieve data from the CSV file and execute =======================    
 d3.csv("assets/data/data.csv").then(function(censusRecord){
     censusRecord.forEach(function(record){
         record.smokes = +record.smokes;
@@ -29,7 +29,7 @@ d3.csv("assets/data/data.csv").then(function(censusRecord){
     
     console.log(censusRecord)
     
-    // ==============Create Scales & Axes====================
+    // ==============Create scales & axes====================
     var xLinearScale = d3.scaleLinear()
         .domain([d3.min(censusRecord, d=>d["poverty"]-1),
         d3.max(censusRecord,d=>d["poverty"])])
@@ -60,7 +60,7 @@ d3.csv("assets/data/data.csv").then(function(censusRecord){
         .attr("fill", "steelblue")
         .attr("opacity", ".5");
 
-    //============add texts to each datapoint=========
+//============Add labels to datapoints & axes =========
     gdots.append("text").text(d=>d.abbr)
         .attr("x", d => xLinearScale(d.poverty)-4)
         .attr("y", d => yLinearScale(d.healthcare)+2)
@@ -86,5 +86,5 @@ d3.csv("assets/data/data.csv").then(function(censusRecord){
     .attr("x", 0 - (chartHeight / 2))
     .attr("dy", "1em")
     .attr("class", "aText")
-    .text("Healthcare Coverage %");
+    .text("Lacks Healthcare Coverage %");
 });
